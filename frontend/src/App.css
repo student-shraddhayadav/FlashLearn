@@ -284,3 +284,472 @@ footer {
   line-height: 1.7;
   white-space: pre-line;
 }
+/* ==========================================
+   AI Q&A SECTION
+   ========================================== */
+
+   .qa-box {
+    max-width: 700px;
+    margin: 35px auto 0;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .qa-box h2 {
+    margin-bottom: 10px;
+    color: #6c63ff;
+    font-size: 25px;
+  }
+  
+  .qa-description {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  
+  /* ==========================================
+     Q&A INPUT
+     ========================================== */
+  
+  .qa-input-box {
+    display: flex;
+    gap: 10px;
+    background: #f7f8fc;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .qa-input-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 13px;
+    font-size: 15px;
+    color: #222;
+  }
+  
+  .qa-input-box input::placeholder {
+    color: #999;
+  }
+  
+  .qa-input-box button {
+    border: none;
+    background: #6c63ff;
+    color: white;
+    padding: 0 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .qa-input-box button:hover {
+    background: #574fd6;
+  }
+  
+  .qa-input-box button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+  
+  
+  /* ==========================================
+     Q&A HISTORY
+     ========================================== */
+  
+  .qa-history {
+    margin-top: 25px;
+  }
+  
+  
+  /* ==========================================
+     CONVERSATION
+     ========================================== */
+  
+  .qa-conversation {
+    margin-bottom: 25px;
+  }
+  
+  
+  /* ==========================================
+     USER QUESTION
+     ========================================== */
+  
+  .question-box {
+    background: #f1f0ff;
+    border-left: 4px solid #6c63ff;
+    padding: 15px 18px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .question-box h4 {
+    margin-bottom: 8px;
+    color: #4b45b5;
+    font-size: 15px;
+  }
+  
+  .question-box p {
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  
+  /* ==========================================
+     AI ANSWER
+     ========================================== */
+  
+  .answer-box {
+    background: #f8f9ff;
+    border-left: 4px solid #4caf50;
+    padding: 15px 18px;
+    border-radius: 10px;
+  }
+  
+  .answer-box h4 {
+    margin-bottom: 8px;
+    color: #388e3c;
+    font-size: 15px;
+  }
+  
+  .answer-box p {
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+  
+  
+  /* ==========================================
+     MOBILE Q&A
+     ========================================== */
+  
+  @media (max-width: 800px) {
+  
+    .qa-box {
+      margin: 25px 20px 0;
+      padding: 20px;
+    }
+  
+    .qa-input-box {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .qa-input-box button {
+      padding: 13px;
+    }
+  
+  }
+  /* ==========================================
+   STUDY NOTES
+   ========================================== */
+
+.notes-box {
+  max-width: 700px;
+  margin: 35px auto 0;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.notes-box h3 {
+  margin-bottom: 25px;
+  color: #6c63ff;
+  font-size: 25px;
+}
+
+
+/* Individual note section */
+
+.note-section {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  border-left: 4px solid #6c63ff;
+  transition: 0.3s;
+}
+
+.note-section:last-child {
+  margin-bottom: 0;
+}
+
+.note-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.08);
+}
+
+.note-section h4 {
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 18px;
+}
+
+.note-section ul {
+  padding-left: 22px;
+  margin: 0;
+}
+
+.note-section li {
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.note-section li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ==========================================
+   IMPORTANT TOPICS
+   ========================================== */
+
+.topics-box {
+  max-width: 700px;
+  margin: 35px auto 0;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.topics-box h3 {
+  margin-bottom: 25px;
+  color: #6c63ff;
+  font-size: 25px;
+}
+
+.topic-card {
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+  margin-bottom: 15px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  border-left: 4px solid #6c63ff;
+  transition: 0.3s;
+}
+
+.topic-card:last-child {
+  margin-bottom: 0;
+}
+
+.topic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.08);
+}
+
+.topic-time {
+  min-width: 100px;
+  height: fit-content;
+  padding: 7px 10px;
+  background: #eeeaff;
+  color: #574fd6;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.topic-info h4 {
+  margin-bottom: 7px;
+  font-size: 17px;
+  color: #333;
+}
+
+.topic-info p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   AI QUIZ
+   ========================================== */
+
+.quiz-box {
+  max-width: 700px;
+  margin: 35px auto 0;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.quiz-box h2 {
+  margin-bottom: 8px;
+  color: #6c63ff;
+  font-size: 25px;
+}
+
+.quiz-description {
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+
+/* ==========================================
+   QUIZ QUESTION CARD
+   ========================================== */
+
+.question-card {
+  padding: 22px;
+  margin-bottom: 20px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  border: 1px solid #e8e8f5;
+}
+
+.question-card h3 {
+  margin-bottom: 18px;
+  color: #333;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+
+/* ==========================================
+   QUIZ OPTIONS
+   ========================================== */
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.option:hover {
+  border-color: #6c63ff;
+  background: #f5f3ff;
+}
+
+.option input {
+  accent-color: #6c63ff;
+  cursor: pointer;
+}
+
+.option span {
+  color: #444;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+
+/* ==========================================
+   SUBMIT QUIZ BUTTON
+   ========================================== */
+
+.submit-quiz {
+  width: 100%;
+  margin-top: 5px;
+  padding: 15px;
+  border: none;
+  border-radius: 9px;
+  background: #6c63ff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-quiz:hover {
+  background: #574fd6;
+  transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   QUIZ SCORE
+   ========================================== */
+
+.score-box {
+  margin-top: 25px;
+  padding: 25px;
+  background: #f1f0ff;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #ddd9ff;
+}
+
+.score-box h2 {
+  margin-bottom: 10px;
+  color: #6c63ff;
+  font-size: 24px;
+}
+
+.score-box p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.score-box strong {
+  color: #574fd6;
+  font-size: 20px;
+}
+
+
+/* ==========================================
+   MOBILE - NOTES, TOPICS & QUIZ
+   ========================================== */
+
+@media (max-width: 800px) {
+
+  .notes-box,
+  .topics-box,
+  .quiz-box {
+    margin: 25px 20px 0;
+    padding: 20px;
+  }
+
+  .note-section {
+    padding: 16px;
+  }
+
+  .topic-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .topic-time {
+    width: fit-content;
+  }
+
+  .question-card {
+    padding: 17px;
+  }
+
+}

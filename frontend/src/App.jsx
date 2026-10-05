@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "./App.css";
 
-function App() {
+function App() 
+{
   const [videoUrl, setVideoUrl] = useState("");
+  const [videoId, setVideoId] = useState("");
   const [result, setResult] = useState("");
-  const [transcript, setTranscript] = useState("");
+
 
   const [summary, setSummary] = useState("");
   const [importantPoints, setImportantPoints] = useState([]);
@@ -16,6 +18,9 @@ function App() {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [score, setScore] = useState(null);
 
+  const [question, setQuestion] = useState("");
+  const [qaHistory, setQaHistory] = useState([]);
+  const [asking, setAsking] = useState(false);
   // ==========================================
   // ANALYZE VIDEO
   // ==========================================
@@ -30,7 +35,7 @@ function App() {
       setResult("Analyzing video...");
 
       // Clear old results
-      setTranscript("");
+      // setTranscript("");
       setSummary("");
       setImportantPoints([]);
       setExplanation("");
@@ -42,7 +47,7 @@ function App() {
 
       // Send URL to backend
       const response = await fetch(
-        "http://localhost:5000/analyze",
+        "http://localhost:5001/analyze",
         {
           method: "POST",
 
@@ -73,8 +78,7 @@ function App() {
       setResult(
         data.message || "Video analyzed successfully!"
       );
-
-      setTranscript(data.transcript || "");
+      setVideoId(data.videoId || "");
 
       setSummary(data.summary || "");
 
@@ -106,9 +110,83 @@ function App() {
       setNotes([]);
       setTopics([]);
       setQuiz([]);
+      setSelectedAnswers({});
+      setScore(null); 
+      setVideoId("");
+      setQuestion("");
+      setQaHistory([]);
     }
   };
+  // Adding QnA
+  const askQuestion = async () => {
 
+    if (question.trim() === "") {
+      alert("Please enter a question");
+      return;
+    }
+  
+    if (!videoId) {
+      alert("Please analyze a video first");
+      return;
+    }
+  
+    try {
+  
+      setAsking(true);
+  
+      const currentQuestion = question;
+  
+      const response = await fetch(
+        "http://localhost:5001/ask",
+        {
+          method: "POST",
+  
+          headers: {
+            "Content-Type": "application/json",
+          },
+  
+          body: JSON.stringify({
+            videoId: videoId,
+            question: currentQuestion,
+          }),
+        }
+      );
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        alert(
+          data.message || "Something went wrong"
+        );
+        return;
+      }
+  
+      // Add new question and answer   
+      // Keep all previous questions and add the new one at the end.
+      setQaHistory((previousHistory) => [
+        ...previousHistory,
+        {
+          question: currentQuestion,
+          answer: data.answer || "",
+        },
+      ]);
+  
+      // Clear input
+      setQuestion("");
+  
+    } catch (error) {
+  
+      console.error(
+        "Error asking question:",
+        error
+      );
+  
+    } finally {
+  
+      setAsking(false);
+  
+    }
+  };
   // ==========================================
   // SELECT QUIZ ANSWER
   // ==========================================
@@ -127,19 +205,58 @@ function App() {
   // SUBMIT QUIZ
   // ==========================================
 
-  const submitQuiz = () => {
+  const submitQuiz = async () => {
     let correctAnswers = 0;
-
+  
     quiz.forEach((question, index) => {
-      const userAnswer =
-        selectedAnswers[index];
-
+      const userAnswer = selectedAnswers[index];
+  
       if (userAnswer === question.answer) {
         correctAnswers++;
       }
     });
-
+  
     setScore(correctAnswers);
+  
+    try {
+      const response = await fetch(
+        "http://localhost:5001/quiz/submit",
+        {
+          method: "POST",
+  
+          headers: {
+            "Content-Type": "application/json",
+          },
+  
+          body: JSON.stringify({
+            videoId: videoId,
+            score: correctAnswers,
+            totalQuestions: quiz.length,
+          }),
+        }
+      );
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        console.error(
+          "Failed to save quiz history:",
+          data.message
+        );
+        return;
+      }
+  
+      console.log(
+        "Quiz history saved:",
+        data
+      );
+  
+    } catch (error) {
+      console.error(
+        "Quiz history error:",
+        error
+      );
+    }
   };
 
   // ==========================================
@@ -184,8 +301,7 @@ function App() {
 
       <section
         className="hero-section"
-        id="home"
-      >
+        id="home">
 
         <div className="hero-content">
 
@@ -200,7 +316,8 @@ function App() {
             and important topics using AI.
           </p>
 
-
+       </div>
+       </section>
           {/* ==================================
               YOUTUBE INPUT
           ================================== */}
@@ -410,7 +527,83 @@ function App() {
 
             </div>
           )}
+          
+          {/* ==================================
+                AI Q&A
+              ================================== */}
 
+    {videoId && (
+        <div className="qa-box">
+
+         <h2> 🤖 Ask FlashLearn AI </h2>
+
+         <p className="qa-description">
+            Ask questions about this video and
+            get answers based on its content.
+          </p>
+
+     <div className="qa-input-box">
+
+      <input
+        type="text"
+        placeholder="Ask something about this video..."
+        value={question}
+        onChange={(e) =>
+          setQuestion(e.target.value)
+        }
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            askQuestion();
+          }
+        }}
+      />
+
+      <button
+        onClick={askQuestion}
+        disabled={asking}>
+        {asking ? "Thinking..." : "Ask AI"}
+      </button>
+
+    </div>
+
+
+    {qaHistory.length > 0 && (
+     <div className="qa-history">
+
+    {qaHistory.map((item, index) => (
+
+      <div className="qa-conversation" key={index} >
+
+        {/* Question */}
+
+        <div className="question-box">
+
+          <h4>🧑 You  </h4>
+
+          <p> {item.question}  </p>
+
+        </div>
+
+
+        {/* Answer */}
+
+        <div className="answer-box">
+
+          <h4>   🤖 FlashLearn AI </h4>
+
+          <p> {item.answer} </p>
+
+        </div>
+
+      </div>
+
+        ))}
+
+      </div>
+      )}
+
+       </div>
+     )}
 
           {/* ==================================
               AI QUIZ
@@ -507,8 +700,7 @@ function App() {
 
               <button
                 className="submit-quiz"
-                onClick={submitQuiz}
-              >
+                onClick={submitQuiz}>
                 Submit Quiz
               </button>
 
@@ -567,30 +759,8 @@ function App() {
               )}
 
             </div>
-          )}
+          )};
 
-
-          {/* ==================================
-              TRANSCRIPT
-          ================================== */}
-
-          {transcript && (
-            <div className="transcript-box">
-
-              <h3>
-                📄 Video Transcript
-              </h3>
-
-              <p>
-                {transcript}
-              </p>
-
-            </div>
-          )}
-
-        </div>
-
-      </section>
 
 
       {/* ======================================
